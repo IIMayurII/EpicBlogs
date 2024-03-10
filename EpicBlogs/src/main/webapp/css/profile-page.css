@@ -1,0 +1,267 @@
+@charset "UTF-8";
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f4f4f4;
+	color: #333;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 20px auto;
+	background-color: #acd1d3;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px;
+	background-color: #2196F3;
+	color: #fff;
+	border-radius: 8px 8px 0 0;
+	position: relative;
+}
+
+.website-name {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.website-name h1 {
+	font-size: 50px;
+	font-style: oblique;
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	margin: 0;
+	color: #00ff88;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px
+		0 #000;
+}
+
+.profile {
+	display: flex;
+	align-items: center;
+}
+
+.profile img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.logout-btn {
+	background-color: #f44336;
+	color: #fff;
+	border: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.logout-btn:hover {
+	background-color: #d32f2f;
+}
+
+/* Main Content Styles */
+.main-content {
+	padding: 20px;
+}
+
+/* Tab Styles */
+.tabs {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+	background-color: #2196F3;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.tab {
+	padding: 10px 15px;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 0;
+	border: none;
+	transition: background-color 0.3s;
+	background-color: #3f51b5;
+}
+
+.tab:hover {
+	background-color: #303f9f;
+}
+
+.tab.active {
+	background-color: #4CAF50;
+}
+
+/* Content Styles */
+.content {
+	display: none;
+	padding: 20px;
+	border-radius: 0 0 8px 8px;
+	background-color: #f9f9f9;
+}
+
+.content.active {
+	display: block;
+}
+
+ul {
+	padding: 0;
+	list-style-type: none;
+}
+
+ul li {
+	margin-bottom: 10px;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+	background-color: #fefefe;
+	margin: 10% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	max-width: 300px;
+	border-radius: 8px;
+	text-align: center;
+}
+
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.modal-content button {
+	background-color: #f44336;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-top: 20px;
+}
+
+.modal-content button:hover {
+	background-color: #d32f2f;
+}
+
+#uploadInput {
+	display: none;
+}
+
+.blog-container {
+	cursor: pointer;
+	transition: background-color 0.3s;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.blog-container:hover {
+	background-color: #f3f3f3;
+}
+
+.blog-container img {
+	width: 100px;
+	height: 100px;
+	border-radius: 8px;
+	margin-right: 20px;
+}
+
+.blog-info {
+	flex: 1;
+	background-color: #fff1e6; /* Light orange background color */
+	padding: 15px;
+	border-radius: 8px;
+}
+
+.blog-info h3 {
+	margin: 0 0 10px 0;
+	font-size: 20px;
+	color: #ff7043; /* Orange text color */
+}
+
+.blog-info p {
+	margin: 0;
+	color: #777;
+}
+
+/* Messages Panel Styles */
+.messages-panel {
+	position: fixed;
+	top: 0;
+	right: -400px;
+	width: 200px;
+	height: 100%;
+	background-color: #fff;
+	box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+	transition: right 0.3s ease;
+	z-index: 9999;
+	overflow-y: auto;
+}
+
+.messages-header {
+	background-color: #2196F3;
+	color: #fff;
+	padding: 15px;
+	text-align: center;
+}
+
+.messages-list {
+	padding: 20px;
+}
+
+.message {
+	border-bottom: 1px solid #ccc;
+	padding: 10px 0;
+}
+
+.message:last-child {
+	border-bottom: none;
+}
+
+.message p {
+	margin: 0;
+}
+
+.close-messages {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: #ccc;
+	cursor: pointer;
+	font-size: 20px;
+}

@@ -1,0 +1,91 @@
+/* latin-ext */
+@font-face {
+  font-family: 'Tomorrow';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/tomorrow/v17/WBLmrETNbFtZCeGqgRXce2DwLQ.woff2) format('woff2');
+  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Tomorrow';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/tomorrow/v17/WBLmrETNbFtZCeGqgRXSe2A.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+body{
+  margin:0;
+  padding:0;
+  font-family: 'Tomorrow', sans-serif;
+  height:100vh;
+background-image: linear-gradient(to top, #2e1753, #1f1746, #131537, #0d1028, #050819);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+.text{
+  position:absolute;
+  top:10%;
+  color:#fff;
+  text-align:center;
+}
+h1{
+  font-size:50px;
+}
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:#fff;
+  right:0;
+  animation:starTwinkle 3s infinite linear;
+}
+.astronaut img{
+  width:100px;
+  position:absolute;
+  top:55%;
+  animation:astronautFly 6s infinite linear;
+}
+@keyframes astronautFly{
+  0%{
+    left:-100px;
+  }
+  25%{
+    top:50%;
+    transform:rotate(30deg);
+  }
+  50%{
+    transform:rotate(45deg);
+    top:55%;
+  }
+  75%{
+    top:60%;
+    transform:rotate(30deg);
+  }
+  100%{
+    left:110%;
+    transform:rotate(45deg);
+  }
+}
+@keyframes starTwinkle{
+  0%{
+     background:rgba(255,255,255,0.4);
+  }
+  25%{
+    background:rgba(255,255,255,0.8);
+  }
+  50%{
+   background:rgba(255,255,255,1);
+  }
+  75%{
+    background:rgba(255,255,255,0.8);
+  }
+  100%{
+    background:rgba(255,255,255,0.4);
+  }
+}
