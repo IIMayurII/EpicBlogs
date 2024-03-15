@@ -9,34 +9,24 @@ public class Blog {
 	private String title;
 	private String body;
 	private Date date;
-	private int likes;
 	private Blob thumbnail,img[];
 	private String subTopic[],subBody[];
+	private String imageString;
 
 	public Blog() {
 		super();
 	}
 
-	public Blog(int blog_id, int authorId, String title, String body, Date date, int likes, Blob thumbnail) {
+	public Blog(int blog_id, int authorId, String title, String body, Date date, Blob thumbnail) {
 		super();
 		this.blog_id = blog_id;
 		this.authorId = authorId;
 		this.title = title;
 		this.body = body;
 		this.date = date;
-		this.likes = likes;
 		this.thumbnail = thumbnail;
 	}
 
-	public Blog(int authorId, String title, String body, Date date, int likes, Blob thumbnail) {
-		super();
-		this.authorId = authorId;
-		this.title = title;
-		this.body = body;
-		this.date = date;
-		this.likes = likes;
-		this.thumbnail = thumbnail;
-	}
 
 	public Blog(int authorId, String title, String body, Date date, Blob thumbnail) {
 		super();
@@ -89,20 +79,6 @@ public class Blog {
 		this.subBody = subBody;
 	}
 
-	public Blog(int blog_id, int authorId, String title, String body, Date date, int likes, Blob thumbnail, Blob[] img,
-			String[] subTopic, String[] subBody) {
-		super();
-		this.blog_id = blog_id;
-		this.authorId = authorId;
-		this.title = title;
-		this.body = body;
-		this.date = date;
-		this.likes = likes;
-		this.thumbnail = thumbnail;
-		this.img = img;
-		this.subTopic = subTopic;
-		this.subBody = subBody;
-	}
 
 	public Blog(int authorId, String title, String body, Blob thumbnail, Blob[] img, String[] subTopic,
 			String[] subBody) {
@@ -116,15 +92,22 @@ public class Blog {
 		this.subBody = subBody;
 	}
 
-
-	public Blog(int blog_id, int authorId, String title, String body, Date date, Blob thumbnail) {
+	public Blog(int blog_id, int authorId, String title, String body, Date date,String imageString ) {
 		super();
 		this.blog_id = blog_id;
 		this.authorId = authorId;
 		this.title = title;
 		this.body = body;
 		this.date = date;
-		this.thumbnail = thumbnail;
+		this.imageString=imageString;
+	}
+	
+	public String getImageString() {
+		return imageString;
+	}
+
+	public void setImageString(String imageString) {
+		this.imageString = imageString;
 	}
 
 	public int getBlog_id() {
@@ -165,14 +148,6 @@ public class Blog {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public int getLikes() {
-		return likes;
-	}
-
-	public void setLikes(int likes) {
-		this.likes = likes;
 	}
 
 	public Blob getThumbnail() {

@@ -141,7 +141,7 @@ public class UserData {
 		}
 		return user;
 	}
-	
+
 	public int getLogin(String username, String password) {
 		try {
 			String query = "select uid from User where username=? AND password=?";
@@ -157,5 +157,22 @@ public class UserData {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	public  String getUserNameByID(Connection connection,int uid) {
+		String uname = null;
+		String query = "select fname,lname from User_view where uid=?";
+		try {
+			PreparedStatement pstmt = connection.prepareStatement(query);
+			pstmt.setInt(1, uid);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				uname= rs.getString("fname")+" "+rs.getString("lname");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return uname;
 	}
 }

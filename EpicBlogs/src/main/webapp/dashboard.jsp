@@ -89,14 +89,9 @@ body {
 				blog = data.getBlogPromo(i.next());
 				String body = blog.getBody();
 				String author = data.getAuthorName(blog.getBlog_id());
-
+				Image= blog.getImageString();
 				if (body.length() > 135) {
 					body = body.substring(0, 135) + "..."; //
-				}
-				Blob imageBlob = blog.getThumbnail();
-				if (imageBlob != null) {
-					byte[] imageData = imageBlob.getBytes(1, (int) imageBlob.length());
-					Image = Base64.getEncoder().encodeToString(imageData);
 				}
 			%>
 

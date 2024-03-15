@@ -9,6 +9,7 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="com.data.UserData"%>
 <%@page import="com.entities.User"%>
+<%@page import="com.data.BlogPromo"%>
 
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -18,6 +19,7 @@ User user = null;
 String Image = null;
 Connection conn = null;
 BlogData data = null;
+TreeSet<Integer> ts =null; 
 
 if (session.getAttribute("login-status") == null) {
 	response.sendRedirect("index.jsp");
@@ -82,82 +84,30 @@ if (session.getAttribute("login-status") == null) {
 					onclick="showTab('commented')">Commented Posts</button>
 			</div>
 			<!-- Blogs by User -->
-
 			<div id="writings" class="content">
 				<h2>Your Blogs</h2>
-				<%
-				TreeSet<Integer> ts = data.getBlogsByAuthor(user.getUid());
-				Iterator<Integer> i = ts.descendingIterator();
-				Blog blog; //Blog blog = data.getBlog(n);
-				int j = 0;
-				while (i.hasNext()) {
-					String img = null;
-					int blogId = i.next();
-					blog = data.getBlogPromo(blogId);
-					String body = blog.getBody();
-					if (body.length() > 230) {
-						body = body.substring(0, 230) + "..."; //
-					}
-					imageBlob = blog.getThumbnail();
-					if (imageBlob != null) {
-						byte[] imageData = imageBlob.getBytes(1, (int) imageBlob.length());
-						img = Base64.getEncoder().encodeToString(imageData);
-					}
-					String author = data.getAuthorName(blogId);
-				%>
-				<form action="view-blog.jsp" method="post" id="blog-form-<%=j%>">
-					<input type="hidden" name="blogId" value="<%=blog.getBlog_id()%>">
-					<button type="submit" style="display: none;"></button>
-				</form>
-				<div class="blog-container"
-					onclick="document.getElementById('blog-form-<%=j%>').submit();">
-					<img <%if (img != null) {%> src="data:image/jpeg;base64, <%=img%>"
-						<%} else {%> src="img/no-thumbnail.png" <%}%>>
-					<div class="blog-info">
-						<h3><%=blog.getTitle()%></h3>
-						<p><%=body%></p>
-					</div>
-				</div>
-				<i>by <%=author%></i>
-				<hr>
-				<br>
-				<%
-				j++;
-				}
-				%>
+				<%ts= data.getBlogsByAuthor(user.getUid()); %>
+				<%=BlogPromo.generateBlogHTML(ts.descendingIterator())%>
 			</div>
+
+		
 
 			<div id="readlist" class="content">
 				<h2>Your Read List</h2>
-				<div class="blog-container" onclick="">
-					<img src="thumbnail1.jpg" alt="Thumbnail 1">
-					<div class="blog-info">
-						<h3>Read Article 1</h3>
-						<p>Description of Read Article 1</p>
-					</div>
-				</div>
+				<% ts = data.getBlogsByAuthor(user.getUid()); %>
+				<%=BlogPromo.generateBlogHTML(ts.descendingIterator())%>
 			</div>
 
 			<div id="liked" class="content">
 				<h2>Liked Posts</h2>
-				<div class="blog-container" onclick="">
-					<img src="thumbnail7.jpg" alt="Thumbnail 7">
-					<div class="blog-info">
-						<h3>Liked Article A</h3>
-						<p>Description of Liked Article A</p>
-					</div>
-				</div>
+				<% ts = data.getBlogsByAuthor(user.getUid()); %>
+				<%=BlogPromo.generateBlogHTML(ts.descendingIterator())%>
 			</div>
 
 			<div id="commented" class="content">
 				<h2>Commented Posts</h2>
-				<div class="blog-container" onclick="">
-					<img src="thumbnail10.jpg" alt="Thumbnail 10">
-					<div class="blog-info">
-						<h3>Commented on Article X</h3>
-						<p>Description of Commented Article X</p>
-					</div>
-				</div>
+				<% ts = data.getBlogsByAuthor(user.getUid()); %>
+				<%=BlogPromo.generateBlogHTML(ts.descendingIterator())%>
 			</div>
 		</div>
 	</div>

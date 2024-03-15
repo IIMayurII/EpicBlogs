@@ -1,9 +1,8 @@
 package com.data;
 
-import java.sql.Blob;
-
 /**
  methods:
+
 
 
 
@@ -19,19 +18,24 @@ import java.sql.Blob;
 	public int getRandomBlogs();
 	public String getAuthorName(int blogId);
 	public boolean isValidBlog(int blogId);
-		public int[] getBlogByAuthor(int authorId);
+	public int[] getBlogByAuthor(int authorId);
+	public TreeSet<Integer> getBlogsByAuthor(int authorId)
+	public boolean isLiked(int blogId,int uid)
+	public int getTotalLikes(int blogId)
+	
   *************** To BE Created *******************
  
  
  	
   
  */
-
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Random;
 import java.util.TreeSet;
@@ -110,8 +114,14 @@ public class BlogData {
 				String title = rs.getString("Blog_title");
 				String body = rs.getString("main_body");
 				Date createDate = rs.getTimestamp("Create_date");
-				Blob image = rs.getBlob("thumbnail");
-				blog = new Blog(blogId, authorId, title, body, createDate, image);
+				Blob imageBlob = rs.getBlob("thumbnail");
+				String imageString = null;
+				if (imageBlob != null) {
+					byte[] imageData = imageBlob.getBytes(1, (int) imageBlob.length());
+					imageString = Base64.getEncoder().encodeToString(imageData);
+				}
+
+				blog = new Blog(blogId, authorId, title, body, createDate, imageString);
 			}
 
 		} catch (SQLException e) {
@@ -247,7 +257,7 @@ public class BlogData {
 		ResultSet rs = null;
 		String query = "SELECT Blog_id, Author_id, Blog_title,main_body, Create_date, thumbnail,"
 				+ "subtopic_1, image_1, sub_body_1, subtopic_2, image_2,"
-				+ "sub_body_2, subtopic_3, image_3, sub_body_3, no_of_likes from blog_view where blog_id=?";
+				+ "sub_body_2, subtopic_3, image_3, sub_body_3 from blog_view where blog_id=?";
 		try {
 			pstmt = connection.prepareStatement(query);
 			pstmt.setInt(1, blogId);
@@ -258,14 +268,13 @@ public class BlogData {
 				String title = rs.getString("Blog_title");
 				String body = rs.getString("main_body");
 				Blob thumbnail = rs.getBlob("thumbnail");
-				int likes = rs.getInt("no_of_likes");
 				Blob img[] = { rs.getBlob("image_1"), rs.getBlob("image_2"), rs.getBlob("image_3") };
 				String subTopic[] = { rs.getString("subtopic_1"), rs.getString("subtopic_2"),
 						rs.getString("subtopic_3") };
 				String subBody[] = { rs.getString("sub_body_1"), rs.getString("sub_body_2"),
 						rs.getString("sub_body_3") };
 
-				blog = new Blog(blogId, authorId, title, body, createDate, likes, thumbnail, img, subTopic, subBody);
+				blog = new Blog(blogId, authorId, title, body, createDate, thumbnail, img, subTopic, subBody);
 
 			}
 
@@ -286,6 +295,42 @@ public class BlogData {
 		}
 		return blog;
 	}
+
+	public boolean isLiked(int blogId, int uid) {
+		String query = "SELECT user_id FROM liked_table WHERE blog_id=? AND user_id=?";
+		try {
+			PreparedStatement pstmt = connection.prepareStatement(query);
+			pstmt.setInt(1, blogId);
+			pstmt.setInt(2, uid);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public int getTotalLikes(int blogId) {
+		String query = "SELECT count(*) as count FROM blog.liked_table where blog_id=?";
+
+		int like = 0;
+		try {
+			PreparedStatement pstmt = connection.prepareStatement(query);
+			pstmt.setInt(1, blogId);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				like = rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return like;
+
+	}
+
 }
 
 /**

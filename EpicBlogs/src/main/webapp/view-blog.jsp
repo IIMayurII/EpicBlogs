@@ -12,10 +12,18 @@ if (session.getAttribute("login-status") == null) {
 	response.sendRedirect("index.jsp");
 } else {
 	conn = (Connection) session.getAttribute("db");
-	int blogId = Integer.parseInt(request.getParameter("blogId"));
+	int blogId = 0;
+	if (request.getParameter("blogId") != null) {
+		blogId = Integer.parseInt(request.getParameter("blogId"));
+	} else {
+		System.out.println((int)session.getAttribute("blogId"));
+		blogId=(int)session.getAttribute("blogId");
+	}
 	User user = (User) session.getAttribute("user");
 	BlogData data = new BlogData(conn);
 	Blog blog = data.getBlog(blogId);
+
+	Boolean isLike = data.isLiked(blogId, blog.getAuthorId());
 
 	String author = data.getAuthorName(blogId);
 	String thumbnail = null;
@@ -43,6 +51,7 @@ if (session.getAttribute("login-status") == null) {
 <head>
 <meta charset="UTF-8">
 <title>Blog Post</title>
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link rel="stylesheet"
@@ -116,6 +125,16 @@ h1 {
 	transition: background-color 0.3s ease;
 }
 
+.btn.like-button {
+	background-color: white;
+	color: blue;
+}
+
+.btn.like-button.liked {
+	background-color: blue;
+	color: white;
+}
+
 .like-button:hover {
 	background-color: #666;
 }
@@ -183,18 +202,28 @@ h1 {
 				<%
 				}
 				%>
+				<form action="LikeServlet" method="post">
+					<input type="hidden" name="blog-id" value="<%=blogId%>"> <input
+						type="hidden" name="user-id" value="<%=user.getUid()%>">
+					<button class="btn like-button <%=(isLike ? "liked" : "")%>"
+						type="submit">
+						<%=data.getTotalLikes(blogId)%>
+						<i class="fas fa-thumbs-up mr-2"></i>
+					</button>
+					<input type="hidden" name="liked" value="<%=isLike%>">
+				</form>
 
 
-				<div class="d-flex justify-content-between align-items-center mt-5">
+
+				<%-- <div class="d-flex justify-content-between align-items-center mt-5">
 					<p class="lead"></p>
 					<button class="btn like-button">
 						<%=blog.getLikes()%>
 						<i class="fas fa-thumbs-up mr-2"></i>
 					</button>
-				</div>
+				</div> --%>
 			</div>
 		</div>
-
 		<div class="comments">
 			<h2>Comments</h2>
 			<ul class="list-unstyled">
@@ -261,6 +290,7 @@ h1 {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+
 	<%@include file="footer.html"%>
 </body>
 </html>
